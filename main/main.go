@@ -1,27 +1,27 @@
 package main
 
 import (
-	"auth"
 	"fmt"
 	"github.com/gin-gonic/gin"
+	"github.com/kalderasoft/go-auth"
 )
 
 func main() {
-	// Force log's color
-	gin.ForceConsoleColor()
+	// // Force log's color
+	// gin.ForceConsoleColor()
 
-	// Creates a gin router with default middleware:
-	// logger and recovery (crash-free) middleware
-	r := gin.Default()
+	// // Creates a gin router with default middleware:
+	// r := gin.Default()
 
-	r.POST("/login", Login)
+	// err := r.Run(":4000") // listen and serve on 0.0.0.0:8080
+	// if err != nil {
+	// 	fmt.Println(err.Error())
+	// }
+	auth.InitDatabase()
 
-	err := r.Run(":4000") // listen and serve on 0.0.0.0:8080
-	if err != nil {
-		fmt.Println(err.Error())
-	}
 }
 
+// Login function is a controller for /login endpoint
 func Login(c *gin.Context) {
 	email := c.PostForm("email")
 	password := c.PostForm("password")
