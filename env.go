@@ -42,14 +42,8 @@ func GetEnv() *Environment {
 	if url == "" {
 		log.Fatalf("%s is required!", ENV_DB_URL)
 	}
-	if username == "" {
-		log.Fatalf("%s is required!", ENV_DB_USERNAME)
-	}
 	if dbName == "" {
 		log.Fatalf("%s is required!", ENV_DB_NAME)
-	}
-	if password == "" {
-		log.Fatalf("%s is required!", ENV_DB_PASSWORD)
 	}
 	if collection == "" {
 		log.Fatalf("%s is required!", ENV_DB_COLLECTION)

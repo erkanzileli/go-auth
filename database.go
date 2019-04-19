@@ -19,11 +19,18 @@ type Database struct {
 	Collection     mongo.Collection
 }
 
+func CreateURIWithCredentials(username, password, url string) string {
+	return fmt.Sprintf("mongodb://%s:%s@%s",
+		username, password, url)
+}
+
+func CreateURI(url string) string {
+	return fmt.Sprintf("mongodb://%s", url)
+}
+
 // ConnectDatabase is takes username, password, url and gives database client
-func ConnectDatabase(username, password, url string) *mongo.Client {
-	client, err := mongo.NewClient(options.Client().ApplyURI(
-		fmt.Sprintf("mongodb://%s:%s@%s",
-			username, password, url)))
+func ConnectDatabase(uri string) *mongo.Client {
+	client, err := mongo.NewClient(options.Client().ApplyURI(uri))
 
 	if err != nil {
 		log.Fatalf("Connection error  %v", err)
@@ -40,12 +47,16 @@ func ConnectDatabase(username, password, url string) *mongo.Client {
 // InitDatabase takes parameters from environment and creates a Database Object
 func InitDatabase(url, dbName, username, password, collectionName string) *Database {
 	db := new(Database)
-	db.Username = username
-	db.Password = password
 	db.URL = url
 	db.DatabaseName = dbName
 	db.CollectionName = collectionName
-	db.Client = *ConnectDatabase(username, password, url)
+	if username != "" || password != "" {
+		db.Username = username
+		db.Password = password
+		db.Client = *ConnectDatabase(CreateURIWithCredentials(username, password, url))
+	} else {
+		db.Client = *ConnectDatabase(CreateURI(url))
+	}
 	db.Collection = *db.Client.Database(db.DatabaseName).Collection(db.CollectionName)
 	return db
 }

@@ -21,19 +21,23 @@ func main() {
 	r := gin.Default()
 
 	env := auth.GetEnv()
+	log.Print("Environment variables was taken.")
+
 	DB = auth.InitDatabase(env.DB_URL, env.DB_NAME,
 		env.DB_USERNAME, env.DB_PASSWORD, env.DB_COLLECTION)
+	log.Print("Database connection is established.")
 
 	// Routes
 	r.POST("/login", Login)
 
-	//err := autotls.Run(r, "example1.com", "example2.com") // listen and serve on 0.0.0.0:8080
+	// err := autotls.Run(r, "example1.com", "example2.com") // listen and serve on 0.0.0.0:8080
 
 	// Run server
 	err := r.Run(":8000")
 	if err != nil {
 		log.Fatalf("%s", err.Error())
 	}
+	log.Print("Server is running.")
 
 }
 
