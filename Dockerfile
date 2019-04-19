@@ -10,8 +10,6 @@ RUN go get -u github.com/kalderasoft/go-auth
 
 WORKDIR src/github.com/kalderasoft/go-auth
 
-COPY . .
-
 RUN dep ensure
 
 CMD ["go", "run", "main/main.go"]
