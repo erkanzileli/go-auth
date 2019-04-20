@@ -44,8 +44,8 @@ func ConnectDatabase(uri string) *mongo.Client {
 	return client
 }
 
-// InitDatabase takes parameters from environment and creates a Database Object
-func InitDatabase(url, dbName, username, password, collectionName string) *Database {
+// Initialize takes parameters from environment and creates a Database Object
+func Initialize(url, dbName, username, password, collectionName string) *Database {
 	db := new(Database)
 	db.URL = url
 	db.DatabaseName = dbName
