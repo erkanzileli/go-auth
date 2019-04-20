@@ -1,0 +1,101 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: auth-server
+---
+apiVersion: v1
+data:
+  .dockerconfigjson: eyJhdXRocyI6eyJkb2NrZXItcmVnaXN0cnkuMzUuMjAyLjE1LjM2Lm5pcC5pbyI6eyJ1c2VybmFtZSI6ImFkbWluIiwicGFzc3dvcmQiOiIxMjNxd2Vhc2QiLCJhdXRoIjoiWVdSdGFXNDZNVEl6Y1hkbFlYTmsifX19
+kind: Secret
+metadata:
+  name: regcred
+  namespace: auth-server
+type: kubernetes.io/dockerconfigjson
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: authserver
+  namespace: auth-server
+  labels:
+    app: authserver
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: authserver
+  template:
+    metadata:
+      labels:
+        app: authserver
+        release: authserver
+    spec:
+      imagePullSecrets:
+        - name: regcred
+      containers:
+        - name: authserver
+          image: docker-registry.35.202.15.36.nip.io/go-auth
+          ports:
+            - containerPort: 8000
+          env:
+            - name: DB_NAME
+              value: "auth"
+            - name: DB_COLLECTION
+              value: "users"
+            - name: DB_USERNAME
+              value: "go-auth"
+            - name: DB_PASSWORD
+              value: "IOvrErajOi11TY7q"
+            - name: DB_URL
+              value: "graphql-backend-mongo-cluster-shard-00-00-pej2l.mongodb.net:27017,graphql-backend-mongo-cluster-shard-00-01-pej2l.mongodb.net:27017,graphql-backend-mongo-cluster-shard-00-02-pej2l.mongodb.net:27017/test?ssl=true&replicaSet=graphql-backend-mongo-cluster-shard-0&authSource=admin&retryWrites=true"
+            - name: JWT_EXPIRE
+              value: "10"
+            - name: JWT_SECRET
+              value: "my-super-powerful-secret"
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: authserver
+  namespace: auth-server
+  labels:
+    app: authserver
+    release: authserver
+spec:
+  selector:
+    app: authserver
+    release: authserver
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 8000
+      name: default
+---
+apiVersion: extensions/v1beta1
+kind: Ingress
+metadata:
+  name: authserver
+  namespace: auth-server
+  labels:
+    app: authserver
+    release: authserver
+  annotations:
+    certmanager.k8s.io/acme-http01-edit-in-place: "true"
+    certmanager.k8s.io/cluster-issuer: letsencrypt-prod
+    kubernetes.io/ingress.class: nginx
+spec:
+  tls:
+    - hosts:
+        - authserver.35.202.15.36.nip.io
+      secretName: authserver.35.202.15.36.nip.io-tls
+  rules:
+    - host: authserver.35.202.15.36.nip.io
+      http:
+        paths:
+          - backend:
+              serviceName: authserver
+              servicePort: 80
+            path: /
+---
