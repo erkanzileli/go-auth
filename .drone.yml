@@ -22,5 +22,6 @@ steps:
         from_secret: gmail_password
       from:
         from_secret: gmail_from
+      skip_verify: true
       recipients: [ erkanzileli@gmail.com ]
       recipients_only: true
