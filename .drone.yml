@@ -2,16 +2,16 @@ kind: pipeline
 name: default
 
 steps:
-  - name: docker
-    image: plugins/docker
-    settings:
-      repo: docker-registry.35.202.15.36.nip.io/go-auth
-      registry: docker-registry.35.202.15.36.nip.io
-      tags: latest
-      username:
-        from_secret: docker_username
-      password:
-        from_secret: docker_password
+#  - name: docker
+#    image: plugins/docker
+#    settings:
+#      repo: docker-registry.35.202.15.36.nip.io/go-auth
+#      registry: docker-registry.35.202.15.36.nip.io
+#      tags: latest
+#      username:
+#        from_secret: docker_username
+#      password:
+#        from_secret: docker_password
   - name: notify
     image: drillster/drone-email
     settings:
@@ -24,5 +24,3 @@ steps:
         from_secret: gmail_from
       recipients: [ erkanzileli@gmail.com ]
       recipients_only: true
-    when:
-      status: [ changed, failure ]
