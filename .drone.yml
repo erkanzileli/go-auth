@@ -12,3 +12,14 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
+  - name: notify
+    image: drillster/drone-email
+      host: smtp.some-server.com
+      username:
+        from_secret: gmail_username
+      password:
+        from_secret: gmail_password
+      from:
+        from_secret: gmail_from
+      recipients: [ erkanzileli@gmail.com ]
+      recipients_only: true
