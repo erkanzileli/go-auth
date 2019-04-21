@@ -12,8 +12,24 @@ metadata:
   name: regcred
   namespace: auth-server
 type: kubernetes.io/dockerconfigjson
-
 ---
+#apiVersion: v1
+#kind: Secret
+#type: kubernetes.io/tls
+#metadata:
+#  name: authserver.35.202.15.36.nip.io-tls
+#  namespace: auth-server
+#  labels:
+#    certmanager.k8s.io/certificate-name: authserver.35.202.15.36.nip.io-tls
+#  annotations:
+#    certmanager.k8s.io/alt-names: authserver.35.202.15.36.nip.io
+#    certmanager.k8s.io/common-name: authserver.35.202.15.36.nip.io
+#    certmanager.k8s.io/issuer-kind: ClusterIssuer
+#    certmanager.k8s.io/issuer-name: letsencrypt-prod
+#data:
+#  tls.crt: ""
+#  tls.key: ""
+#---
 apiVersion: apps/v1
 kind: Deployment
 metadata:
@@ -71,8 +87,8 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: http
-      name: default
+      targetPort: 80
+      name: authserver
 ---
 apiVersion: extensions/v1beta1
 kind: Ingress
@@ -89,10 +105,10 @@ metadata:
 spec:
   tls:
     - hosts:
-        - authserver.35.202.15.36.nip.io
-      secretName: authserver.35.202.15.36.nip.io-tls
+        - auth-server.35.202.15.36.nip.io
+      secretName: auth-server.35.202.15.36.nip.io-tls
   rules:
-    - host: authserver.35.202.15.36.nip.io
+    - host: auth-server.35.202.15.36.nip.io
       http:
         paths:
           - backend:
