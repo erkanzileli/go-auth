@@ -37,8 +37,9 @@ spec:
       containers:
         - name: authserver
           image: docker-registry.35.202.15.36.nip.io/go-auth
+          imagePullPolicy: Always
           ports:
-            - containerPort: 8000
+            - containerPort: 80
           env:
             - name: DB_NAME
               value: "auth"
@@ -70,7 +71,7 @@ spec:
   ports:
     - protocol: TCP
       port: 80
-      targetPort: 8000
+      targetPort: http
       name: default
 ---
 apiVersion: extensions/v1beta1

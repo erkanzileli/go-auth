@@ -1,10 +1,13 @@
 package main
 
 import (
+	"fmt"
+	"log"
+	"os"
+
 	"github.com/gin-gonic/gin"
 	"github.com/kalderasoft/go-auth"
 	"github.com/kalderasoft/go-auth/controller"
-	"log"
 )
 
 func main() {
@@ -20,12 +23,17 @@ func main() {
 
 	controller.Initialize(r, db)
 
+	port := 8000
+
+	if os.Getenv("GINMODE") == "release" {
+		port = 80
+	}
+
 	// Run server
-	err := r.Run(":8000")
+	err := r.Run(fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("%s", err.Error())
 	}
 	log.Print("Server is running.")
 
 }
-

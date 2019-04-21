@@ -4,7 +4,7 @@ ENV GIN_MODE release
 
 EXPOSE 443
 
-EXPOSE 8000
+EXPOSE 80
 
 RUN go get -u github.com/kalderasoft/go-auth
 
