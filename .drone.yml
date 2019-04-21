@@ -1,5 +1,5 @@
 kind: pipeline
-name: default
+name: go-auth
 
 steps:
   - name: docker
@@ -23,7 +23,6 @@ steps:
       repo: docker-registry.35.202.15.36.nip.io/go-auth
       container: authserver
       tag: latest
-
   - name: notify
     image: drillster/drone-email
     settings:
