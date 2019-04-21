@@ -25,7 +25,7 @@ func main() {
 
 	port := 8000
 
-	if os.Getenv("GINMODE") == "release" {
+	if os.Getenv("GIN_MODE") == "release" {
 		port = 80
 	}
 
