@@ -12,6 +12,18 @@ steps:
         from_secret: docker_username
       password:
         from_secret: docker_password
+  - name: deploy
+    image: quay.io/honestbee/drone-kubernetes
+    settings:
+      kubernetes_server: https://35.225.64.169
+      kubernetes_token:
+        from_secret: k8s_admin_token
+      namespace: auth-server
+      deployment: authserver
+      repo: docker-registry.35.202.15.36.nip.io/go-auth
+      container: authserver
+      tag: latest
+
   - name: notify
     image: drillster/drone-email
     settings:
