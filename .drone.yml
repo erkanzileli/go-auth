@@ -2,12 +2,16 @@ kind: pipeline
 name: go-auth
 
 steps:
+  - name: tag
+    image: alpine:3.7
+    commands:
+      - echo $DRONE_COMMIT > .tags
+      - cat .tags
   - name: docker
     image: plugins/docker
     settings:
       repo: docker-registry.35.202.15.36.nip.io/go-auth
       registry: docker-registry.35.202.15.36.nip.io
-      tags: latest
       username:
         from_secret: docker_username
       password:
@@ -22,17 +26,17 @@ steps:
       deployment: authserver
       repo: docker-registry.35.202.15.36.nip.io/go-auth
       container: authserver
-      tag: latest
-  - name: notify
-    image: drillster/drone-email
-    settings:
-      host: smtp.gmail.com
-      username:
-        from_secret: gmail_username
-      password:
-        from_secret: gmail_password
-      from:
-        from_secret: gmail_from
-      skip_verify: true
-      recipients: [ erkanzileli@gmail.com ]
-      recipients_only: true
+      tag: ${DRONE_COMMIT_SHA}
+#  - name: notify
+#    image: drillster/drone-email
+#    settings:
+#      host: smtp.gmail.com
+#      username:
+#        from_secret: gmail_username
+#      password:
+#        from_secret: gmail_password
+#      from:
+#        from_secret: gmail_from
+#      skip_verify: true
+#      recipients: [ erkanzileli@gmail.com ]
+#      recipients_only: true
