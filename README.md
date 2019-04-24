@@ -1,7 +1,8 @@
+![Build Status](http://35.246.226.178/api/badges/kalderasoft/go-auth/status.svg)
+
 # Authentication Server
 
-![Build Status](http://35.246.226.178/api/badges/kalderasoft/go-auth/status.svg)
-![Project Architecture](https://github.com/kalderasoft/go-auth/static/architecture.png)
+![Project Architecture](https://github.com/kalderasoft/go-auth/raw/master/static/architecture.png)
 
 ## Environment Variables
 
