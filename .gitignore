@@ -18,6 +18,7 @@
 
 ### Go Patch ###
 /vendor/
+*vendor*
 /Godeps/
 
 ### Intellij+all ###

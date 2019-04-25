@@ -17,7 +17,7 @@ func Initialize(r *gin.Engine, db *auth.Database) {
 	// Temporary
 	r.GET("/check", func(c *gin.Context) {
 		c.JSON(200, gin.H{
-			"Status": "OK",
+			"Status": "Up",
 		})
 	})
 

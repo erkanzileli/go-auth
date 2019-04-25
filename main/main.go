@@ -19,11 +19,10 @@ func main() {
 
 	db := auth.Initialize(env.DbUrl, env.DbName,
 		env.DbUsername, env.DbPassword, env.DbCollection)
-	log.Print("Database connection is established.")
 
 	controller.Initialize(r, db)
 
-	port := 8000
+	port := 8001
 
 	if os.Getenv("GIN_MODE") == "release" {
 		port = 80

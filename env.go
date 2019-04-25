@@ -7,14 +7,6 @@ import (
 	"time"
 )
 
-/*
-username: go-auth
-password: IOvrErajOi11TY7q
-url: graphql-backend-mongo-cluster-shard-00-00-pej2l.mongodb.net:27017,graphql-backend-mongo-cluster-shard-00-01-pej2l.mongodb.net:27017,graphql-backend-mongo-cluster-shard-00-02-pej2l.mongodb.net:27017/test?ssl=true&replicaSet=graphql-backend-mongo-cluster-shard-0&authSource=admin&retryWrites=true
-dbName: auth
-collection: users
-*/
-
 // Keys of required Environment variables
 const (
 	EnvDbUrl        = "DB_URL"
