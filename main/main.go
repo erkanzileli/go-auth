@@ -14,7 +14,10 @@ func main() {
 	// Creates a gin router with default middleware:
 	r := gin.Default()
 
-	env := auth.GetEnv()
+	env, err := auth.GetEnv()
+	if err != nil {
+		log.Fatal(err.Error())
+	}
 	log.Print("Environment variables was taken.")
 
 	db := auth.Initialize(env.DbUrl, env.DbName,
@@ -29,7 +32,7 @@ func main() {
 	}
 
 	// Run server
-	err := r.Run(fmt.Sprintf(":%d", port))
+	err = r.Run(fmt.Sprintf(":%d", port))
 	if err != nil {
 		log.Fatalf("%s", err.Error())
 	}
