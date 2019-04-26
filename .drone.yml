@@ -2,6 +2,10 @@ kind: pipeline
 name: go-auth
 
 steps:
+  - name: test
+    image: golang
+    commands:
+      - go test
   - name: tag
     image: alpine:3.7
     commands:

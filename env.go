@@ -3,10 +3,8 @@ package auth
 import (
 	"errors"
 	"fmt"
-	"log"
 	"os"
 	"strconv"
-	"time"
 )
 
 // Keys of required Environment variables
@@ -28,14 +26,14 @@ type Environment struct {
 	DbPassword   string
 	DbCollection string
 	JwtSecret    string
-	JwtExpire    time.Duration
+	JwtExpire    int
 }
 
 var E *Environment
 
 // GetEnv func takes all needed environment variables fro OS
 func GetEnv() (*Environment, error) {
-	var e Environment
+	env := new(Environment)
 	var err error
 	username := os.Getenv(EnvDbUsername)
 	password := os.Getenv(EnvDbPassword)
@@ -46,17 +44,17 @@ func GetEnv() (*Environment, error) {
 	jwtExpire := os.Getenv(EnvJwtExpire)
 
 	if jwtExpire != "" {
-		exp, err := strconv.Atoi(jwtExpire)
-		if err != nil {
-			log.Fatalf("%s must be int!", EnvJwtExpire)
-			return nil, err
+		exp, e := strconv.Atoi(jwtExpire)
+		if exp <= 0 {
+			err = errors.New(fmt.Sprintf("%s must greather than zero!", EnvJwtExpire))
 		}
-		e.JwtExpire = time.Duration(exp)
+		if e != nil {
+			err = errors.New(fmt.Sprintf("%s must be int!", EnvJwtExpire))
+		}
+		env.JwtExpire = exp
 	}
-	// if jwt-secret given then use it
 	if jwtSecret != "" {
-		e.JwtSecret = jwtSecret
-		SignedString = []byte(jwtSecret)
+		env.JwtSecret = jwtSecret
 	}
 	if url == "" {
 		err = errors.New(fmt.Sprintf("%s is required!", EnvDbUrl))
@@ -67,11 +65,13 @@ func GetEnv() (*Environment, error) {
 	if collection == "" {
 		err = errors.New(fmt.Sprintf("%s is required!", EnvDbCollection))
 	}
-	e.DbUrl = url
-	e.DbName = dbName
-	e.DbUsername = username
-	e.DbPassword = password
-	e.DbCollection = collection
-	E = &e
-	return &e, err
+
+	env.DbUrl = url
+	env.DbName = dbName
+	env.DbUsername = username
+	env.DbPassword = password
+	env.DbCollection = collection
+
+	E = env
+	return env, err
 }

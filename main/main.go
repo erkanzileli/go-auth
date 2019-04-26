@@ -2,12 +2,11 @@ package main
 
 import (
 	"fmt"
-	"log"
-	"os"
-
 	"github.com/gin-gonic/gin"
 	"github.com/kalderasoft/go-auth"
 	"github.com/kalderasoft/go-auth/controller"
+	"log"
+	"os"
 )
 
 func main() {
@@ -20,9 +19,10 @@ func main() {
 	}
 	log.Print("Environment variables was taken.")
 
+	// Initialize
+	auth.InitializeTokenService(env)
 	db := auth.Initialize(env.DbUrl, env.DbName,
 		env.DbUsername, env.DbPassword, env.DbCollection)
-
 	controller.Initialize(r, db)
 
 	port := 8001
