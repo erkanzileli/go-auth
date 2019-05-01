@@ -1,4 +1,4 @@
-![Build Status](http://35.246.226.178/api/badges/kalderasoft/go-auth/status.svg)
+![Build Status](http://34.74.167.3/api/badges/kalderasoft/go-auth/status.svg)
 
 # Authentication Server
 
