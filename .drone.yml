@@ -8,8 +8,8 @@ steps:
   - name: test
     image: golang:1.12
     commands:
-      - go get -u github.com/kalderasoft/go-auth
-      - cd $GOPATH/src/github.com/kalderasoft/go-auth
+      - go get -u github.com/erkanzileli/go-auth
+      - cd $GOPATH/src/github.com/erkanzileli/go-auth
       - curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
       - dep ensure
       - go test

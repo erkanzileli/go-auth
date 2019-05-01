@@ -3,8 +3,8 @@ package controller
 import (
 	"context"
 	"fmt"
+	"github.com/erkanzileli/go-auth"
 	"github.com/gin-gonic/gin"
-	"github.com/kalderasoft/go-auth"
 	"go.mongodb.org/mongo-driver/bson"
 	"log"
 )

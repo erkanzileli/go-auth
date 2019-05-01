@@ -9,9 +9,9 @@ EXPOSE 80
 # install dep
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
 
-RUN go get -u github.com/kalderasoft/go-auth
+RUN go get -u github.com/erkanzileli/go-auth
 
-WORKDIR src/github.com/kalderasoft/go-auth
+WORKDIR src/github.com/erkanzileli/go-auth
 
 RUN dep ensure
 

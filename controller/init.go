@@ -1,8 +1,8 @@
 package controller
 
 import (
+	"github.com/erkanzileli/go-auth"
 	"github.com/gin-gonic/gin"
-	"github.com/kalderasoft/go-auth"
 )
 
 // Db variable is represent the DB client for controllers

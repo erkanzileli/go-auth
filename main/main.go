@@ -2,9 +2,9 @@ package main
 
 import (
 	"fmt"
+	"github.com/erkanzileli/go-auth"
+	"github.com/erkanzileli/go-auth/controller"
 	"github.com/gin-gonic/gin"
-	"github.com/kalderasoft/go-auth"
-	"github.com/kalderasoft/go-auth/controller"
 	"log"
 	"os"
 )
